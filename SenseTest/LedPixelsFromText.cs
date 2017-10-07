@@ -35,7 +35,9 @@ public static class LedPixelsFromText
                 })
                 .Where(p => p != null)
                 .ToImmutableList();
-            return new LedPixels(pixels);
+            var minRow = pixels.Min(p => p.Cell.Row);
+            var minColumn = pixels.Min(p => p.Cell.Column);
+            return new LedPixels(pixels).Shift(-minRow, -minColumn);
         }
     }
 }
