@@ -4,8 +4,18 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "build",
+            "taskName": "buildSenseTest",
             "command": "dotnet build SenseTest",
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "taskName": "buildUploadPi",
+            "command": "dotnet build UploadPi",
             "type": "shell",
             "group": "build",
             "presentation": {

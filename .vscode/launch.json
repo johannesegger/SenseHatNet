@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "Launch SenseTest",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "buildSenseTest",
             "program": "${workspaceRoot}/SenseTest/bin/Debug/netcoreapp2.0/SenseTest.dll",
             "args": [],
             "cwd": "${workspaceRoot}",
@@ -16,34 +16,22 @@
             "console": "internalConsole"
         },
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Launch UploadPi",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceRoot}/SenseTest/bin/Debug/netcoreapp2.0/SenseTest.dll",
-            "args": [],
+            "preLaunchTask": "buildUploadPi",
+            "program": "${workspaceRoot}/UploadPi/bin/Debug/netcoreapp2.0/UploadPi.dll",
+            "args": [
+                "<source-dir>",
+                "<target-address>",
+                "<username>",
+                "<password>",
+                "<target-dir>",
+                "<target-executable>"
+            ],
             "cwd": "${workspaceRoot}",
             "stopAtEntry": false,
-            "launchBrowser": {
-                "enabled": true,
-                "args": "${auto-detect-url}",
-                "windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start ${auto-detect-url}"
-                },
-                "osx": {
-                    "command": "open"
-                },
-                "linux": {
-                    "command": "xdg-open"
-                }
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceRoot}/Views"
-            }
+            "console": "internalConsole"
         },
         {
             "name": ".NET Core Attach",
