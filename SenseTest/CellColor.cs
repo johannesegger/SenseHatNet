@@ -1,11 +1,14 @@
-public class CellColor
+namespace Sense
 {
-    public Cell Cell { get; }
-    public Color Color { get; }
-
-    public CellColor(Cell cell, Color color)
+    public class CellColor
     {
-        Cell = cell;
-        Color = color;
+        public Cell Cell { get; }
+        public Color Color { get; }
+
+        public CellColor(Cell cell, Color color)
+        {
+            Cell = cell;
+            Color = color;
+        }
     }
 }

@@ -1,13 +1,16 @@
-public class Color
+namespace Sense
 {
-    public byte Red { get; }
-    public byte Green { get; }
-    public byte Blue { get; }
-
-    public Color(byte red, byte green, byte blue)
+    public class Color
     {
-        Red = red;
-        Green = green;
-        Blue = blue;
+        public byte Red { get; }
+        public byte Green { get; }
+        public byte Blue { get; }
+
+        public Color(byte red, byte green, byte blue)
+        {
+            Red = red;
+            Green = green;
+            Blue = blue;
+        }
     }
 }

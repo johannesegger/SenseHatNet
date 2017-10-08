@@ -1,11 +1,14 @@
-public class Cell
+namespace Sense
 {
-    public int Row { get; }
-    public int Column { get; }
-
-    public Cell(int row, int column)
+    public class Cell
     {
-        Row = row;
-        Column = column;
+        public int Row { get; }
+        public int Column { get; }
+
+        public Cell(int row, int column)
+        {
+            Row = row;
+            Column = column;
+        }
     }
 }
