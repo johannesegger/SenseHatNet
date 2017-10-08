@@ -44,7 +44,7 @@ namespace Sense.Led
                 .Where(IsSenseFrameBuffer)
                 .Select(GetDevice)
                 .FirstOrDefault(p => p != null)
-                ?? throw new Exception("Cannot detect Sense HAT device");
+                ?? throw new Exception("Cannot detect Sense HAT LED matrix device");
         }
 
         private static readonly Lazy<string> frameBufferDevicePath =
