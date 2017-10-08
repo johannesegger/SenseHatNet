@@ -1,4 +1,4 @@
-namespace Sense
+namespace Sense.Led
 {
     public class Cell
     {

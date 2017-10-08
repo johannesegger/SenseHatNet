@@ -6,11 +6,11 @@ using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.Primitives;
 
-namespace Sense
+namespace Sense.Led
 {
-    public static class LedPixelsFromText
+    public static class PixelsFromText
     {
-        public static LedPixels Create(string text)
+        public static Pixels Create(string text)
         {
             var width = text.Length * 10;
             using (var image = new Image<Rgba32>(Configuration.Default, width, 10))
@@ -42,7 +42,7 @@ namespace Sense
                     .ToImmutableList();
                 var minRow = pixels.Min(p => p.Cell.Row);
                 var minColumn = pixels.Min(p => p.Cell.Column);
-                return new LedPixels(pixels)
+                return new Pixels(pixels)
                     .Shift(-minRow, -minColumn)
                     .SetColor(new Color(255, 255, 255));
             }

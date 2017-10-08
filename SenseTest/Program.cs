@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             var text = args.Length > 0 ? args[0] : "Hello World";
-            Sense.Led.ShowMessage(text);
+            Sense.Led.LedMatrix.ShowMessage(text);
         }
     }
 }

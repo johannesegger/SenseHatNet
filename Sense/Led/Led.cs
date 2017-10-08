@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Sense.Utils;
 
-namespace Sense
+namespace Sense.Led
 {
-    public static class Led
+    public static class LedMatrix
     {
         private const string SENSE_HAT_FRAMEBUFFER_NAME = "RPi-Sense FB";
 
@@ -16,7 +17,7 @@ namespace Sense
         private static readonly IEnumerable<int> rowRange = Enumerable.Range(0, Rows);
         private static readonly IEnumerable<int> columnRange = Enumerable.Range(0, Columns);
 
-        public static string GetFrameBufferDevicePath()
+        private static string GetFrameBufferDevicePath()
         {
             bool IsSenseFrameBuffer(string file)
             {
@@ -53,16 +54,16 @@ namespace Sense
 
         public static void ShowMessage(string text)
         {
-            var ledPixels = LedPixelsFromText.Create(text);
-            var maxShift = -ledPixels.Pixels.Max(p => p.Cell.Column) - 1;
+            var pixels = PixelsFromText.Create(text);
+            var maxShift = -pixels.Items.Max(p => p.Cell.Column) - 1;
             for (int i = 0; i >= maxShift; i--)
             {
-                SetPixels(ledPixels.Shift(0, i));
+                SetPixels(pixels.Shift(0, i));
                 Thread.Sleep(TimeSpan.FromMilliseconds(i == 0 ? 1000 : 50));
             }
         }
 
-        public static void SetPixels(LedPixels value)
+        public static void SetPixels(Pixels pixels)
         {
             byte[] Pack(Color color)
             {
@@ -73,20 +74,20 @@ namespace Sense
                 return BitConverter.GetBytes(bits16);
             }
 
-            var content = GetColors(value)
+            var content = GetColors(pixels)
                 .SelectMany(Pack)
                 .ToArray();
 
             File.WriteAllBytes(FrameBufferDevicePath, content);
         }
 
-        private static IEnumerable<Color> GetColors(LedPixels value)
+        private static IEnumerable<Color> GetColors(Pixels pixels)
         {
             var equalityComparer = EqualityComparer
                 .Create((CellColor p) => new { p.Cell.Row, p.Cell.Column });
 
             var defaultColor = new Color(0, 0, 0);
-            return value.Pixels
+            return pixels.Items
                 .Where(p => rowRange.Contains(p.Cell.Row) && columnRange.Contains(p.Cell.Column))
                 .Union(
                     rowRange
