@@ -55,8 +55,7 @@ namespace Sense.Stick
                             var length = 0;
                             while (length < package.Length)
                             {
-                                length = await stream.ReadAsync(package, length, package.Length - length, ct);
-                                System.Console.WriteLine($"Read {length} bytes");
+                                length += await stream.ReadAsync(package, length, package.Length - length, ct);
                             }
 
                             var timeSec = BitConverter.ToInt32(package, 0);
