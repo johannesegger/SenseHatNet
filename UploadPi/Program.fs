@@ -139,6 +139,11 @@ let main argv =
         let sshExecute = clientExecute (fun () -> new SshClient(connectionInfo))
         let scpExecute = clientExecute (fun () -> new ScpClient(connectionInfo))
 
+        let escapeLinuxFilename (text: string) =
+            text
+                .Replace(Path.DirectorySeparatorChar, '/')
+                .Replace(" ", "\\ ")
+
         let upload source target =
             eventX "Uploading {source} to {target}"
             >> setField "source" source
@@ -146,6 +151,13 @@ let main argv =
             |> logger.info
 
             try
+                fun (client: SshClient) ->
+                    Path.GetDirectoryName target
+                    |> sprintf "mkdir -p %s"
+                    |> client.RunCommand
+                |> sshExecute
+                |> ignore
+
                 fun (client: ScpClient) ->
                     client.Upload(FileInfo source, target)
                 |> scpExecute
@@ -179,28 +191,32 @@ let main argv =
                 eventX "EXCEPTION {exception}"
                 >> setField "exception" e
                 |> logger.error
-                
-        let escapeSpace (text: string) =
-            text.Replace(" ", "\\ ")
 
         let watcherFactory () =
-            new FileSystemWatcher(sourceDir)
+            new FileSystemWatcher(sourceDir, IncludeSubdirectories = true)
         use x =
             createWatcher watcherFactory
+            // exclude directories
+            |> Observable.filter(function
+                | Changed path
+                | Created path
+                | Renamed (_, path) -> File.Exists (sourceDir @@ path)
+                | Deleted path -> true
+            )
             |> Observable.throttleChanges sourceDir
             |> Observable.subscribe(function
-                | Changed path ->
-                    upload (sourceDir @@ path) (sprintf "%s/%s" targetDir path)
+                | Changed path 
                 | Created path ->
-                    upload (sourceDir @@ path) (sprintf "%s/%s" targetDir path)
+                    upload (sourceDir @@ path) ((targetDir @@ path) |> escapeLinuxFilename)
                 | Renamed (oldPath, newPath) ->
-                    let oldTarget = sprintf "%s/%s" targetDir oldPath |> escapeSpace
-                    let newTarget = sprintf "%s/%s" targetDir newPath |> escapeSpace
+                    let oldTarget = (targetDir @@ oldPath) |> escapeLinuxFilename
+                    let newTarget = (targetDir @@ newPath) |> escapeLinuxFilename
                     sprintf """mv %s %s""" oldTarget newTarget
                     |> runCommand
                 | Deleted path ->
-                    let target = sprintf "%s/%s" targetDir path |> escapeSpace
-                    sprintf """rm %s""" target
+                    targetDir @@ path
+                    |> escapeLinuxFilename
+                    |> sprintf """rm -r %s"""
                     |> runCommand
             )
         eventX "Synchronization of local folder {source} with Pi folder {target} started."
