@@ -144,29 +144,10 @@ let main argv =
                 .Replace(Path.DirectorySeparatorChar, '/')
                 .Replace(" ", "\\ ")
 
-        let upload source target =
-            eventX "Uploading {source} to {target}"
-            >> setField "source" source
-            >> setField "target" target
-            |> logger.info
-
-            try
-                fun (client: SshClient) ->
-                    Path.GetDirectoryName target
-                    |> sprintf "mkdir -p %s"
-                    |> client.RunCommand
-                |> sshExecute
-                |> ignore
-
-                fun (client: ScpClient) ->
-                    client.Upload(FileInfo source, target)
-                |> scpExecute
-                eventX "Upload succeeded"
-                |> logger.info
-            with e ->
-                eventX "Upload failed: {exception}"
-                >> setField "exception" e
-                |> logger.error
+        let linuxDirName (path: string) =
+            match path.TrimEnd('/').LastIndexOf '/' with
+            | -1 -> path
+            | v -> path.Substring(0, v)
 
         let runCommand command =
             eventX "Executing {command} ..."
@@ -189,6 +170,27 @@ let main argv =
                     |> logger.info
             with e ->
                 eventX "EXCEPTION {exception}"
+                >> setField "exception" e
+                |> logger.error
+
+        let upload source target =
+            linuxDirName target
+            |> sprintf "mkdir -p %s"
+            |> runCommand
+
+            try
+                eventX "Uploading {source} to {target}"
+                >> setField "source" source
+                >> setField "target" target
+                |> logger.info
+
+                fun (client: ScpClient) ->
+                    client.Upload(FileInfo source, target)
+                |> scpExecute
+                eventX "Upload succeeded"
+                |> logger.info
+            with e ->
+                eventX "Upload failed: {exception}"
                 >> setField "exception" e
                 |> logger.error
 
