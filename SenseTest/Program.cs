@@ -3,6 +3,8 @@ using System.Reactive;
 using System.Reactive.Linq;
 using Sense.Led;
 using Sense.Stick;
+using System.Threading;
+using System.Linq;
 using RTIMULibNet;
 
 namespace SenseTest
@@ -12,13 +14,45 @@ namespace SenseTest
         static void Main(string[] args)
         {
             // TestLedMessage(args.Length > 0 ? args[0] : "Hello World");
+            // TestLowLight();
             // TestJoystick();
             TestRTIMULib();
         }
 
         private static void TestLedMessage(string text)
         {
-            LedMatrix.ShowMessage(text);
+            Sense.Led.LedMatrix.ShowMessage(text);
+        }
+
+        private static void TestLowLight()
+        {
+            var pixels = Sense.Led.PixelsFromText
+                .Create("A")
+                .SetColor(new Color(255, 255, 255));
+            Sense.Led.LedMatrix.SetPixels(pixels);
+            while (true)
+            {
+                Sense.Led.LedMatrix.SetLowLight(true);
+                System.Console.WriteLine("LowLight = true");
+                System.Console.WriteLine($"Gamma: {string.Join(" ", Sense.Led.LedMatrix.GetGamma().Select(v => v.ToString("X")))}");
+                Thread.Sleep(2000);
+
+                Sense.Led.LedMatrix.SetLowLight(false);
+                System.Console.WriteLine("LowLight = false");
+                System.Console.WriteLine($"Gamma: {string.Join(" ", Sense.Led.LedMatrix.GetGamma().Select(v => v.ToString("X")))}");
+                Thread.Sleep(2000);
+                
+                var buffer = new byte[] { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 10, 10 };
+                Sense.Led.LedMatrix.SetGamma(buffer);
+                System.Console.WriteLine("Light = custom");
+                System.Console.WriteLine($"Gamma: {string.Join(" ", Sense.Led.LedMatrix.GetGamma().Select(v => v.ToString("X")))}");
+                Thread.Sleep(2000);
+
+                Sense.Led.LedMatrix.SetLowLight(false);
+                System.Console.WriteLine("LowLight = false");
+                System.Console.WriteLine($"Gamma: {string.Join(" ", Sense.Led.LedMatrix.GetGamma().Select(v => v.ToString("X")))}");
+                Thread.Sleep(2000);
+            }
         }
 
         private static void TestJoystick()
@@ -40,13 +74,16 @@ namespace SenseTest
             {
                 switch (evt.State)
                 {
-                    case JoystickKeyState.Press: return Observable
-                        .Return<Func<Pixels, Pixels>>(p => Transform(p, evt.Key));
-                    case JoystickKeyState.Release: return Observable
-                        .Never<Func<Pixels, Pixels>>();
-                    case JoystickKeyState.Hold: return Observable
-                        .Interval(TimeSpan.FromMilliseconds(200))
-                        .Select(_ => new Func<Pixels, Pixels>(p => Transform(p, evt.Key)));
+                    case JoystickKeyState.Press:
+                        return Observable
+                            .Return<Func<Pixels, Pixels>>(p => Transform(p, evt.Key));
+                    case JoystickKeyState.Release:
+                        return Observable
+                            .Never<Func<Pixels, Pixels>>();
+                    case JoystickKeyState.Hold:
+                        return Observable
+                            .Interval(TimeSpan.FromMilliseconds(200))
+                            .Select(_ => new Func<Pixels, Pixels>(p => Transform(p, evt.Key)));
                     default: throw new ArgumentOutOfRangeException(nameof(evt.State));
                 }
             }
@@ -58,7 +95,7 @@ namespace SenseTest
                 .Switch()
                 .Scan(initialPixels, (p, fn) => fn(p))
                 .StartWith(initialPixels)
-                .Subscribe(LedMatrix.SetPixels);
+                .Subscribe(Sense.Led.LedMatrix.SetPixels);
             using (d)
             {
                 Console.WriteLine("Press enter to exit ...");
@@ -68,46 +105,38 @@ namespace SenseTest
 
         private static void TestRTIMULib()
         {
-            var settingsHandle = NativeMethods.RTIMUSettings_createDefault();
-            var imuHandle = NativeMethods.RTIMU_createIMU(settingsHandle);
-
-            var pressureHandle = NativeMethods.RTPressure_createPressure(settingsHandle);
-            var pressureInitialized = NativeMethods.RTPressure_pressureInit(pressureHandle);
-            System.Console.WriteLine($"Pressure initialized: {pressureInitialized}");
-
-            var humidityHandle = NativeMethods.RTHumidity_createHumidity(settingsHandle);
-            var humidityInitialized = NativeMethods.RTHumidity_humidityInit(humidityHandle);
-            System.Console.WriteLine($"Humidity initialized: {humidityInitialized}");
-            while (true)
+            using (var settings = RTIMUSettings.CreateDefault())
+            using (var imu = settings.CreateIMU())
+            using (var pressure = settings.CreatePressure())
+            using (var humidity = settings.CreateHumidity())
             {
-                var pressureReadSuccess = NativeMethods.RTPressure_pressureRead(
-                    imuHandle,
-                    pressureHandle,
-                    out bool pressureValid,
-                    out float pressure,
-                    out bool temperatureFromPressureValid,
-                    out float temperatureFromPressure);
-                Console.WriteLine($"Pressure read success: {pressureReadSuccess}");
-                Console.WriteLine($"Pressure valid: {pressureValid}");
-                Console.WriteLine($"Pressure: {pressure}");
-                Console.WriteLine($"Temperature valid: {temperatureFromPressureValid}");
-                Console.WriteLine($"Temperature: {temperatureFromPressure}");
-                Console.WriteLine();
+                while (true)
+                {
+                    var imuData = imu.GetData();
+                    Console.WriteLine($"Timestamp: {imuData.Timestamp:O}");
+                    Console.WriteLine($"FusionPose: Valid: {imuData.FusionPoseValid}, Value: {imuData.FusionPose}");
+                    Console.WriteLine($"FusionQPose: Valid: {imuData.FusionQPoseValid}, Value: {imuData.FusionQPose}");
+                    Console.WriteLine($"Gyro: Valid: {imuData.GyroValid}, Value: {imuData.Gyro}");
+                    Console.WriteLine($"Accel: Valid: {imuData.AccelValid}, Value: {imuData.Accel}");
+                    Console.WriteLine($"Compass: Valid: {imuData.CompassValid}, Value: {imuData.Compass}");
+                    Console.WriteLine();
 
-                var humidityReadSuccess = NativeMethods.RTHumidity_humidityRead(
-                    imuHandle,
-                    humidityHandle,
-                    out bool humidityValid,
-                    out float humidity,
-                    out bool temperatureFromHumidityValid,
-                    out float temperatureFromHumidity);
-                Console.WriteLine($"Humidity read success: {humidityReadSuccess}");
-                Console.WriteLine($"Humidity valid: {humidityValid}");
-                Console.WriteLine($"Humidity: {humidity}");
-                Console.WriteLine($"Temperature valid: {temperatureFromHumidityValid}");
-                Console.WriteLine($"Temperature: {temperatureFromHumidity}");
-                Console.WriteLine("===================================================");
-                Console.ReadLine();
+                    var pressureReadResult = pressure.Read();
+                    Console.WriteLine($"Pressure valid: {pressureReadResult.PressureValid}");
+                    Console.WriteLine($"Pressure: {pressureReadResult.Pressure}");
+                    Console.WriteLine($"Temperature valid: {pressureReadResult.TemperatureValid}");
+                    Console.WriteLine($"Temperature: {pressureReadResult.Temperatur}");
+                    Console.WriteLine();
+
+                    var humidityReadResult = humidity.Read();
+                    Console.WriteLine($"Humidity valid: {humidityReadResult.HumidityValid}");
+                    Console.WriteLine($"Humidity: {humidityReadResult.Humidity}");
+                    Console.WriteLine($"Temperature valid: {humidityReadResult.TemperatureValid}");
+                    Console.WriteLine($"Temperature: {humidityReadResult.Temperatur}");
+
+                    Console.WriteLine("===================================================");
+                    Console.ReadLine();
+                }
             }
         }
     }

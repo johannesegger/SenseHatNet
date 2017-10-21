@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RTIMULibNet;
 using Sense.Utils;
 
 namespace Sense.Led
@@ -99,6 +100,21 @@ namespace Sense.Led
                 .OrderBy(p => p.Cell.Row)
                 .ThenBy(p => p.Cell.Column)
                 .Select(p => p.Color);
+        }
+
+        public static void SetLowLight(bool value)
+        {
+            RTIMULibNet.LedMatrix.SetLowLight(FrameBufferDevicePath, value);
+        }
+
+        public static void SetGamma(byte[] buffer)
+        {
+            RTIMULibNet.LedMatrix.SetGamma(FrameBufferDevicePath, buffer);
+        }
+
+        public static byte[] GetGamma()
+        {
+            return RTIMULibNet.LedMatrix.GetGamma(FrameBufferDevicePath);
         }
     }
 }

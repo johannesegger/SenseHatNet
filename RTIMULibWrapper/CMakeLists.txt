@@ -1,7 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8.9)
 
 SET(LIBRTIMUWrapper_SRCS
-    main.cpp
+    rtimulibwrapper.cpp
+    fcntl.cpp
 )
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
