@@ -1,5 +1,5 @@
 # SenseHatNet
-.NET Core API for Raspberry Pi Sense HAT running on Raspbian.
+.NET Core API for Raspberry Pi Sense HAT running on Linux.
 
 ## Development
 You'll need three scripts for smooth development:
