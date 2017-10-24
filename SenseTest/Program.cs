@@ -5,7 +5,7 @@ using Sense.Led;
 using Sense.Stick;
 using System.Threading;
 using System.Linq;
-using RTIMULibNet;
+using Sense.RTIMU;
 
 namespace SenseTest
 {

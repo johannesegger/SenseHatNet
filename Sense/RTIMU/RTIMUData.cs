@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 
-namespace RTIMULibNet
+namespace Sense.RTIMU
 {
     public class RTIMUData
     {

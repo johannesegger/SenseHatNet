@@ -1,4 +1,4 @@
-namespace RTIMULibNet
+namespace Sense.RTIMU
 {
     public sealed class RTHumidityData
     {

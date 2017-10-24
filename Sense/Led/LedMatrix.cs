@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using RTIMULibNet;
+using Sense.RTIMU;
 using Sense.Utils;
 
 namespace Sense.Led
@@ -104,17 +104,17 @@ namespace Sense.Led
 
         public static void SetLowLight(bool value)
         {
-            RTIMULibNet.LedMatrix.SetLowLight(FrameBufferDevicePath, value);
+            Sense.RTIMU.LedMatrix.SetLowLight(FrameBufferDevicePath, value);
         }
 
         public static void SetGamma(byte[] buffer)
         {
-            RTIMULibNet.LedMatrix.SetGamma(FrameBufferDevicePath, buffer);
+            Sense.RTIMU.LedMatrix.SetGamma(FrameBufferDevicePath, buffer);
         }
 
         public static byte[] GetGamma()
         {
-            return RTIMULibNet.LedMatrix.GetGamma(FrameBufferDevicePath);
+            return Sense.RTIMU.LedMatrix.GetGamma(FrameBufferDevicePath);
         }
     }
 }

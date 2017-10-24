@@ -1,6 +1,6 @@
 using System;
 
-namespace RTIMULibNet
+namespace Sense.RTIMU
 {
     public sealed class RTIMUSettings : IDisposable
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace RTIMULibNet
+namespace Sense.RTIMU
 {
     public static class LedMatrix
     {

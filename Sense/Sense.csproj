@@ -1,17 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>SenseHatNet</PackageId>
+    <Authors>JEgger</Authors>
+    <Description>.NET Core API for Raspberry Pi Sense HAT running on Linux</Description>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/johannesegger/SenseHatNet/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/johannesegger/SenseHatNet</PackageProjectUrl>
+    <PackageTags>Sense;RaspberryPi;LED;Joystick;Accellerator;Gyro;Compass;Pressure;Humidity;Temperature</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <RepositoryUrl>https://github.com/johannesegger/SenseHatNet</RepositoryUrl>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <None Update="Resources/SCUMM-8px-unicode.ttf" CopyToOutputDirectory="PreserveNewest" />
+    <EmbeddedResource Include="Resources/SCUMM-8px-unicode.ttf" />
+    <Content Include="Native/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0001" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0001">
+      <ExcludeAssets>contentfiles</ExcludeAssets><!-- stylecop.json (see https://github.com/SixLabors/ImageSharp/issues/374) -->
+    </PackageReference>
     <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
     <PackageReference Include="System.Interactive" Version="3.1.1" />
     <PackageReference Include="System.Reactive" Version="3.1.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RTIMULibNet\RTIMULibNet.csproj" />
+    <PackageReference Include="System.Threading.ThreadPool" Version="4.3.0" />
   </ItemGroup>
 </Project>

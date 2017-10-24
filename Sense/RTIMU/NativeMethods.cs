@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace RTIMULibNet
+namespace Sense.RTIMU
 {
     internal static class NativeMethods
     {
@@ -44,7 +44,7 @@ namespace RTIMULibNet
             public float temperature;
         }
 
-        private const string rtimuLibWrapperPath = "native/libRTIMULibWrapper.so";
+        private const string rtimuLibWrapperPath = "Native/libRTIMULibWrapper.so";
 
         [DllImport(rtimuLibWrapperPath)]
         public static extern IntPtr RTIMUSettings_createDefault();

@@ -2,7 +2,7 @@ using System;
 using System.Numerics;
 using System.Threading;
 
-namespace RTIMULibNet
+namespace Sense.RTIMU
 {
     public sealed class RTIMU : IDisposable
     {

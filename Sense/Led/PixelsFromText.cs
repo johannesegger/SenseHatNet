@@ -17,7 +17,9 @@ namespace Sense.Led
             {
                 var fontCollection = new FontCollection();
                 var assemblyDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var fontFamily = fontCollection.Install(Path.Combine(assemblyDir, "Resources", @"SCUMM-8px-unicode.ttf"));
+                var fontStream = Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream("Sense.Resources.SCUMM-8px-unicode.ttf");
+                var fontFamily = fontCollection.Install(fontStream);
                 var font = fontFamily.CreateFont(8, FontStyle.Regular);
                 image.Mutate(ctx => ctx.DrawText(text, font, Rgba32.Black, PointF.Empty));
                 // using (var stream = System.IO.File.OpenWrite(@"output.png"))
