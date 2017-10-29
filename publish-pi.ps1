@@ -1,1 +1,0 @@
-dotnet publish SenseTest -r linux-arm

@@ -1,1 +1,0 @@
-dotnet run --project UploadPi -- <source-dir> <target-address> <username> <password> <target-dir> <target-executable>

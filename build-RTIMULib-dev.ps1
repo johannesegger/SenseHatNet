@@ -1,1 +1,0 @@
-docker build -f .\RTIMULib-dev\Dockerfile -t rtimulib .

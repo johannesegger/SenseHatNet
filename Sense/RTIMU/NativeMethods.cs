@@ -44,7 +44,7 @@ namespace Sense.RTIMU
             public float temperature;
         }
 
-        private const string rtimuLibWrapperPath = "Native/libRTIMULibWrapper.so";
+        private const string rtimuLibWrapperPath = "libRTIMULibWrapper.so";
 
         [DllImport(rtimuLibWrapperPath)]
         public static extern IntPtr RTIMUSettings_createDefault();

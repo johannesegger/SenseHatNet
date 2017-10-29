@@ -13,7 +13,9 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources/SCUMM-8px-unicode.ttf" />
-    <Content Include="Native/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native" />
+    <Content Include="Native/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
+      <Link>%(Filename)%(Extension)</Link>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0001">

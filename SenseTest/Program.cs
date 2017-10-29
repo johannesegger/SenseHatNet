@@ -13,10 +13,10 @@ namespace SenseTest
     {
         static void Main(string[] args)
         {
-            // TestLedMessage(args.Length > 0 ? args[0] : "Hello World");
+            TestLedMessage(args.Length > 0 ? args[0] : "Hello World");
             // TestLowLight();
             // TestJoystick();
-            TestRTIMULib();
+            // TestRTIMULib();
         }
 
         private static void TestLedMessage(string text)
