@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sense.Utils
 {
-    public class GenericEqualityComparer<T> : IEqualityComparer<T>
+    internal class GenericEqualityComparer<T> : IEqualityComparer<T>
     {
         private readonly Func<T, T, bool> equals;
         private readonly Func<T, int> getHashCode;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Sense.RTIMU
+namespace Sense
 {
     internal static class NativeMethods
     {
