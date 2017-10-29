@@ -1,5 +1,5 @@
 # SenseHatNet
-.NET Core API for Raspberry Pi Sense HAT running on Linux.
+.NET Core API for Raspberry Pi Sense HAT running on Linux. [![image](https://img.shields.io/nuget/v/SenseHatNet.svg)](https://www.nuget.org/packages/SenseHatNet/)
 
 ## Development
 Unfortunately [you can't develop .NET Core applications directly on the Raspberry Pi](https://github.com/dotnet/core/blob/master/samples/RaspberryPiInstructions.md), but you can still *run* apps that are built for Linux ARM devices.  
