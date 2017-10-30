@@ -16,3 +16,6 @@ There are several scripts that simplify development:
 * [`publish.ps1`](publish.ps1) builds the C# part of the app.
 * [`RTIMULib-dev/build.ps1`](RTIMULib-dev/build.ps1) builds the C++ part of the app using a docker container.
 * [`SSHSync/ssh-sync/run.ps1`](SSHSync/ssh-sync/run.ps1) deploys the app to the Pi.
+
+## Acknowledgements
+* Drawing text on the LED matrix uses [SCUMM-8px-unicode](https://fontstruct.com/fontstructions/show/1009353/scumm_8px_unicode) font.
