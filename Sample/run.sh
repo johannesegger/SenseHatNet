@@ -1,0 +1,1 @@
+docker run --privileged --rm -v /sys/class/graphics:/sys/class/graphics -v /sys/class/input:/sys/class/input -v /dev/:/dev/ sense-hat-net
