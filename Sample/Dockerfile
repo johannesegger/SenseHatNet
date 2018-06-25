@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:2.1-sdk-stretch-arm32v7 as builder
+FROM microsoft/dotnet:sdk as builder
 WORKDIR /usr/src/
 COPY SenseTest .
 RUN dotnet publish -r linux-arm -o /usr/src/dist
 
-FROM microsoft/dotnet:2.1-runtime-deps-stretch-slim-arm32v7
+FROM microsoft/dotnet:runtime
 WORKDIR /usr/app/
 COPY --from=builder /usr/src/dist .
 
@@ -12,3 +12,4 @@ RUN apt-get update && \
     apt-get install libunwind8
 
 ENTRYPOINT [ "./SenseTest" ]
+
