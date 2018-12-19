@@ -18,9 +18,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0001">
-      <ExcludeAssets>contentfiles</ExcludeAssets><!-- stylecop.json (see https://github.com/SixLabors/ImageSharp/issues/374) -->
-    </PackageReference>
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0005" />
     <PackageReference Include="System.Collections.Immutable" Version="1.4.0" />
     <PackageReference Include="System.Interactive" Version="3.1.1" />
     <PackageReference Include="System.Reactive" Version="3.1.1" />
