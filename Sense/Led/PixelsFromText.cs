@@ -1,9 +1,13 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Advanced;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
 
 namespace Sense.Led
@@ -26,25 +30,23 @@ namespace Sense.Led
                 // {
                 //     image.SaveAsPng(stream);
                 // }
-                var pixels = image
-                    .SavePixelData()
-                    .Buffer(4)
-                    .Select((buffer, idx) =>
+                var pixelSpan = image.GetPixelSpan();
+                var textCells = new List<CellColor>();
+
+                for (var idx = 0; idx < pixelSpan.Length; idx++)
+                {
+                    var pixel = pixelSpan[idx];
+                    if (pixel.A > 200)
                     {
-                        if (buffer[3] > 200)
-                        {
-                            return new CellColor(
-                                new Cell(idx / width, idx % width),
-                                new Color(buffer[0], buffer[1], buffer[2])
-                            );
-                        }
-                        return null;
-                    })
-                    .Where(p => p != null)
-                    .ToImmutableList();
-                var minRow = pixels.Min(p => p.Cell.Row);
-                var minColumn = pixels.Min(p => p.Cell.Column);
-                return new Pixels(pixels)
+                        textCells.Add(new CellColor(
+                            new Cell(idx / width, idx % width),
+                            new Color(pixel.R, pixel.G, pixel.B)
+                        ));
+                    }
+                }
+                var minRow = textCells.Min(p => p.Cell.Row);
+                var minColumn = textCells.Min(p => p.Cell.Column);
+                return new Pixels(textCells.ToImmutableList())
                     .Shift(-minRow, -minColumn)
                     .SetColor(new Color(255, 255, 255));
             }
