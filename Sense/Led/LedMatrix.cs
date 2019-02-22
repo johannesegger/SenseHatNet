@@ -79,7 +79,11 @@ namespace Sense.Led
                 .SelectMany(Pack)
                 .ToArray();
 
-            File.WriteAllBytes(FrameBufferDevicePath, content);
+            // see https://github.com/dotnet/coreclr/issues/22787
+            using (FileStream fs = File.Open(FrameBufferDevicePath, FileMode.Open))
+            {
+                fs.Write(content, 0, content.Length);
+            }
         }
 
         private static IEnumerable<Color> GetColors(Pixels pixels)
