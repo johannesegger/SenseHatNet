@@ -16,6 +16,9 @@
     <Content Include="Native/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
       <Link>%(Filename)%(Extension)</Link>
     </Content>
+	<Content Include="Native/libRTIMULib.so.7" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
+      <Link>%(Filename)%(Extension)</Link>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0005" />
