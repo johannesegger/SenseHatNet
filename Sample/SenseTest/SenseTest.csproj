@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RuntimeIdentifier>linux-arm</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="SenseHatNet" Version="0.0.5" />
