@@ -113,6 +113,7 @@ extern "C" bool RTPressure_read(RTPressure* pressure, RTPressureData* result)
     result->pressure = data.pressure;
     result->temperatureValid = data.temperatureValid;
     result->temperature = data.temperature;
+    return true;
 }
 
 extern "C" void RTPressure_free(RTPressure* p)
@@ -142,6 +143,7 @@ extern "C" bool RTHumidity_read(RTHumidity* humidity, RTHumidityData* result)
     result->humidity = data.humidity;
     result->temperatureValid = data.temperatureValid;
     result->temperature = data.temperature;
+    return true;
 }
 
 extern "C" void RTHumidity_free(RTHumidity* p)

@@ -1,14 +1,9 @@
-FROM debian
+FROM debian:10
 
 RUN	apt-get update && \
-    apt-get install -y git cmake
-
-ENV CXX=arm-linux-gnueabihf-g++
+    apt-get install -y git cmake g++-arm-linux-gnueabihf g++-aarch64-linux-gnu
 
 WORKDIR /opt
-
-RUN	git clone https://github.com/raspberrypi/tools.git && \
-    ln -sf /opt/tools/arm-bcm2708/arm-rpi-4.9.3-linux-gnueabihf/bin/* /usr/local/bin/
 
 RUN git clone https://github.com/RPi-Distro/RTIMULib.git
 
@@ -18,6 +13,6 @@ VOLUME /opt/RTIMULibWrapper
 VOLUME /opt/bin
 
 CMD cmake ../RTIMULibWrapper && \
-    make -j4 && \
+    make && \
     cp RTIMULib/libRTIMULib.so.7 /opt/bin && \
     cp libRTIMULibWrapper.so /opt/bin

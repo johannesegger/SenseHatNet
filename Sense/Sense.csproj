@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>SenseHatNet</PackageId>
     <Authors>JEgger</Authors>
     <Description>.NET Core API for Raspberry Pi Sense HAT running on Linux</Description>
@@ -13,10 +13,16 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources/SCUMM-8px-unicode.ttf" />
-    <Content Include="Native/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
+    <Content Include="Native/aarch64/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm64\native">
       <Link>%(Filename)%(Extension)</Link>
     </Content>
-	<Content Include="Native/libRTIMULib.so.7" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
+    <Content Include="Native/aarch64/libRTIMULib.so.7" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm64\native">
+      <Link>%(Filename)%(Extension)</Link>
+    </Content>
+    <Content Include="Native/arm/libRTIMULibWrapper.so" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
+      <Link>%(Filename)%(Extension)</Link>
+    </Content>
+    <Content Include="Native/arm/libRTIMULib.so.7" CopyToOutputDirectory="PreserveNewest" PackagePath="runtimes\linux-arm\native">
       <Link>%(Filename)%(Extension)</Link>
     </Content>
   </ItemGroup>
