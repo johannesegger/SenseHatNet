@@ -11,10 +11,6 @@ RUN dotnet publish -o /usr/src/dist --no-restore
 
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1
 
-# https://github.com/dotnet/cli/issues/3390
-RUN apt-get update && \
-    apt-get install libunwind8
-
 WORKDIR /usr/app/
 COPY --from=builder /usr/src/dist .
 
