@@ -44,61 +44,61 @@ namespace Sense
             public float temperature;
         }
 
-        private const string rtimuLibWrapperPath = "libRTIMULibWrapper.so";
+        private const string rtimuExtPath = "libRTIMUExt.so";
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern IntPtr RTIMUSettings_createDefault();
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern IntPtr RTIMUSettings_free(IntPtr settingsHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern IntPtr RTIMU_create(IntPtr settingsHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern bool RTIMU_init(IntPtr imuHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern int RTIMU_getPollInterval(IntPtr imuHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern bool RTIMU_read(IntPtr imuHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern void RTIMU_getData(IntPtr imuHandle, out RTIMUData data);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern void RTIMU_free(IntPtr imuHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern IntPtr RTPressure_create(IntPtr settingsHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern bool RTPressure_init(IntPtr pressureHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern bool RTPressure_read(
             IntPtr pressureHandle,
             out RTPressureData data);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern void RTPressure_free(IntPtr pressureHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern IntPtr RTHumidity_create(IntPtr settingsHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern bool RTHumidity_init(IntPtr humidityHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern bool RTHumidity_read(
             IntPtr humidityHandle,
             out RTHumidityData data);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern void RTHumidity_free(IntPtr humidityHandle);
 
-        [DllImport(rtimuLibWrapperPath)]
+        [DllImport(rtimuExtPath)]
         public static extern int fcntl_ioctl(string path, uint request, IntPtr arg);
     }
 }

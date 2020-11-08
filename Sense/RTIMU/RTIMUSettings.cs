@@ -1,7 +1,4 @@
 using System;
-using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Sense.RTIMU
 {
@@ -9,12 +6,6 @@ namespace Sense.RTIMU
     {
         public static RTIMUSettings CreateDefault()
         {
-            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "libRTIMULib.so.7");
-            var handle = NativeLibrary.Load(path);
-            if (handle == IntPtr.Zero)
-            {
-                throw new DllNotFoundException($"Unable to load shared library '{Path.GetFileName(path)}'.");
-            }
             var settingsHandle = NativeMethods.RTIMUSettings_createDefault();
             return new RTIMUSettings(settingsHandle);
         }

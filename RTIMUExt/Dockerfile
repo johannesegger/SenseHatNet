@@ -9,10 +9,9 @@ RUN git clone https://github.com/RPi-Distro/RTIMULib.git
 
 WORKDIR /opt/build
 
-VOLUME /opt/RTIMULibWrapper
+VOLUME /opt/RTIMUExt
 VOLUME /opt/bin
 
-CMD cmake ../RTIMULibWrapper && \
+CMD cmake ../RTIMUExt && \
     make && \
-    cp RTIMULib/libRTIMULib.so.7 /opt/bin && \
-    cp libRTIMULibWrapper.so /opt/bin
+    cp libRTIMUExt.so /opt/bin
