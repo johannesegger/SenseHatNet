@@ -4,7 +4,7 @@
 
 [![image](https://img.shields.io/nuget/v/SenseHatNet.svg)](https://www.nuget.org/packages/SenseHatNet/)
 
-Since .NET Core 2.1 we can build and run .NET applications directly on a RPi 3. Check out [this sample application](Sample/) on how to build and run a .NET application on a RPi 3 using Docker.
+Check out [this sample application](Sample/) on how to build and run a .NET application on a Raspberry Pi (works natively and also using Docker).
 
 ## Getting started
 
