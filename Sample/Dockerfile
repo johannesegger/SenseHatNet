@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 as builder
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as builder
 WORKDIR /usr/src/
 
 # Copy just the project file(s) and restore to take advantage of the docker multi-layer cache
@@ -9,7 +9,7 @@ RUN dotnet restore
 COPY SenseTest .
 RUN dotnet publish -o /usr/src/dist --no-restore
 
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+FROM mcr.microsoft.com/dotnet/runtime:5.0
 
 WORKDIR /usr/app/
 COPY --from=builder /usr/src/dist .

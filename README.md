@@ -1,6 +1,6 @@
 # SenseHatNet
 
-.NET Core API for Raspberry Pi Sense HAT running on Linux. Inspired by and partially ported from the [Sense HAT Python library](https://github.com/RPi-Distro/python-sense-hat).
+.NET library for Raspberry Pi Sense HAT running on Linux. Inspired by and partially ported from the [Sense HAT Python library](https://github.com/RPi-Distro/python-sense-hat).
 
 [![image](https://img.shields.io/nuget/v/SenseHatNet.svg)](https://www.nuget.org/packages/SenseHatNet/)
 

@@ -3,7 +3,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SenseHatNet</PackageId>
     <Authors>JEgger</Authors>
-    <Description>.NET Core API for Raspberry Pi Sense HAT running on Linux</Description>
+    <Description>.NET library for Raspberry Pi Sense HAT running on Linux</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/johannesegger/SenseHatNet</PackageProjectUrl>
     <PackageTags>Sense;RaspberryPi;LED;Joystick;Accellerator;Gyro;Compass;Pressure;Humidity;Temperature</PackageTags>

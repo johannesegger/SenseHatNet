@@ -4,9 +4,9 @@ sudo sh get-docker.sh
 
 # Install dotnet SDK - https://docs.microsoft.com/en-us/dotnet/core/install/linux-debian#manual-install
 # ARM64
-wget https://download.visualstudio.microsoft.com/download/pr/7a027d45-b442-4cc5-91e5-e5ea210ffc75/68c891aaae18468a25803ff7c105cf18/dotnet-sdk-3.1.403-linux-arm64.tar.gz
+wget https://download.visualstudio.microsoft.com/download/pr/27840e8b-d61c-472d-8e11-c16784d40091/ae9780ccda4499405cf6f0924f6f036a/dotnet-sdk-5.0.100-linux-arm64.tar.gz
 # ARM32
-wget https://download.visualstudio.microsoft.com/download/pr/8a2da583-cac8-4490-bcca-2a3667d51142/6a0f7fb4b678904cdb79f3cd4d4767d5/dotnet-sdk-3.1.403-linux-arm.tar.gz
+wget https://download.visualstudio.microsoft.com/download/pr/e8912d3b-483b-4d6f-bd3a-3066b3194313/20f2261fe4e16e55df4bbe03c65a7648/dotnet-sdk-5.0.100-linux-arm.tar.gz
 mkdir -p "$HOME/dotnet" && tar zxf dotnet-sdk-*.tar.gz -C "$HOME/dotnet"
 echo "
 export DOTNET_ROOT=\$HOME/dotnet
